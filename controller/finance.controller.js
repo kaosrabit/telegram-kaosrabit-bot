@@ -1,3 +1,6 @@
+// TAMBAHKAN BARIS INI PALING ATAS
+require('dotenv').config();
+
 const db = require('../config/firebase');
 const { parseInput } = require('../utils/parser');
 const { formatRupiah, getCurrentDate, getCurrentMonthStr } = require('../utils/format');
