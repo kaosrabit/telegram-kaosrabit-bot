@@ -1,13 +1,26 @@
-const admin = require("firebase-admin");
+const admin = require('firebase-admin');
 
-const serviceAccount = require("../serviceAccountKey.json");
+let db;
 
-admin.initializeApp({
-    projectId: process.env.FIREBASE_PROJECT_ID,
-    clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-    privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, "\n"),
-});
+try {
+    // Cek apakah FIREBASE_KEY ada
+    if (!process.env.FIREBASE_KEY) {
+        throw new Error("FIREBASE_KEY tidak ditemukan di Environment Variables!");
+    }
 
-const db = admin.firestore();
+    const serviceAccount = JSON.parse(process.env.FIREBASE_KEY);
+
+    if (!admin.apps.length) {
+        admin.initializeApp({
+            credential: admin.credential.cert(serviceAccount)
+        });
+    }
+
+    db = admin.firestore();
+    console.log("✅ Firebase Connected");
+
+} catch (error) {
+    console.error("❌ Gagal inisialisasi Firebase:", error.message);
+}
 
 module.exports = db;
