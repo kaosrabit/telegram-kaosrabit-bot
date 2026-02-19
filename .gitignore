@@ -1,0 +1,8 @@
+.env
+
+serviceAccountKey.json
+
+PLAN.md
+
+/node_modules
+package-lock.json
